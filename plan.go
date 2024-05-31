@@ -14,24 +14,24 @@ type ImportPlan struct {
 }
 
 type VirtualServer struct {
-	VMXFilePath                string     `json:"vmx_file_path,omitempty"`
-	VirtualServerID            int        `json:"virtual_server_id,omitempty"`
-	VirtualServerUUID          string     `json:"virtual_server_uuid,omitempty"`
-	OriginDir                  string     `json:"origin_dir,omitempty"`
-	OriginName                 string     `json:"origin_name,omitempty"`
-	Hostname                   string     `json:"hostname,omitempty"`
-	ComputeResourceID          int        `json:"compute_resource_id,omitempty"`
-	GuestOS                    string     `json:"guest_os,omitempty"`
-	CustomPlan                 solus.Plan `json:"custom_plan"`
-	PrimaryDiskSourcePath      string     `json:"primary_disk_source_path,omitempty"`
-	PrimaryDiskDestinationPath string     `json:"primary_disk_destination_path,omitempty"`
-	AdditionalDisks            []Disk     `json:"additional_disks,omitempty"`
-	PrimaryIP                  *string    `json:"primary_ip,omitempty"`
-	AdditionalIPv4             *int       `json:"additional_ipv4,omitempty"`
-	Password                   string     `json:"password,omitempty"`
-	SSHKeys                    []int      `json:"ssh_keys,omitempty"`
-	MacAddress                 *string    `json:"mac_address,omitempty"`
-	Firmware                   *string    `json:"firmware,omitempty"`
+	VMXFilePath                string          `json:"vmx_file_path,omitempty"`
+	VirtualServerID            int             `json:"virtual_server_id,omitempty"`
+	VirtualServerUUID          string          `json:"virtual_server_uuid,omitempty"`
+	OriginDir                  string          `json:"origin_dir,omitempty"`
+	OriginName                 string          `json:"origin_name,omitempty"`
+	Hostname                   string          `json:"hostname,omitempty"`
+	ComputeResourceID          int             `json:"compute_resource_id,omitempty"`
+	GuestOS                    string          `json:"guest_os,omitempty"`
+	CustomPlan                 solus.Plan      `json:"custom_plan"`
+	PrimaryDiskSourcePath      string          `json:"primary_disk_source_path,omitempty"`
+	PrimaryDiskDestinationPath string          `json:"primary_disk_destination_path,omitempty"`
+	AdditionalDisks            []Disk          `json:"additional_disks,omitempty"`
+	PrimaryIP                  *string         `json:"primary_ip,omitempty"`
+	AdditionalIPv4             *int            `json:"additional_ipv4,omitempty"`
+	Password                   string          `json:"password,omitempty"`
+	SSHKeys                    []int           `json:"ssh_keys,omitempty"`
+	MacAddress                 *string         `json:"mac_address,omitempty"`
+	Firmware                   *solus.Firmware `json:"firmware,omitempty"`
 }
 
 type Disk struct {
