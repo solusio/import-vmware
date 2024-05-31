@@ -21,6 +21,8 @@ github.com/solusio/solus-go-sdk v0.0.0-20240516085532-daf5d30e61a0 h1:+sR7X4l/sx
 github.com/solusio/solus-go-sdk v0.0.0-20240516085532-daf5d30e61a0/go.mod h1:pIvIG/rIvED2rM9fhk41wAog/zE4QUKWBL7ABH9ad4Y=
 github.com/solusio/solus-go-sdk v0.0.0-20240524062700-52e7ee9a6035 h1:n7G6LCap8JY0jG04mKjlDkz7aTsQ1Mon6rcKX8Gbab8=
 github.com/solusio/solus-go-sdk v0.0.0-20240524062700-52e7ee9a6035/go.mod h1:pIvIG/rIvED2rM9fhk41wAog/zE4QUKWBL7ABH9ad4Y=
+github.com/solusio/solus-go-sdk v0.0.0-20240531111439-a9f6da81f560 h1:P3ZYo0LzievAK4Nz/TX+KK2lzI4GfGKR6goZSS5KjQs=
+github.com/solusio/solus-go-sdk v0.0.0-20240531111439-a9f6da81f560/go.mod h1:pIvIG/rIvED2rM9fhk41wAog/zE4QUKWBL7ABH9ad4Y=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=

@@ -1,14 +1,19 @@
 package main
 
 import (
+	"context"
 	"encoding/xml"
 	"errors"
 	"fmt"
 	libvirtxml "github.com/libvirt/libvirt-go-xml"
 	"github.com/solusio/import-vmware/command"
 	"github.com/solusio/import-vmware/common"
+	"github.com/solusio/solus-go-sdk"
+	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
+	"time"
 )
 
 const (
@@ -53,34 +58,54 @@ func importDisks(sourceIP string, plan ImportPlan) error {
 			return fmt.Errorf("failed to move %q to %q: %s", disks[0].path, vs.PrimaryDiskDestinationPath, err)
 		}
 
-		if len(vs.AdditionalDisks) == 0 {
-			continue
+		if strings.Contains(vs.GuestOS, "windows") {
+			baseURL, err := url.Parse(plan.Settings.APIURL)
+			if err != nil {
+				return fmt.Errorf("parse api url %q: %w", plan.Settings.APIURL, err)
+			}
+
+			client, err := solus.NewClient(baseURL, solus.APITokenAuthenticator{Token: plan.Settings.APIToken})
+			if err != nil {
+				return fmt.Errorf("create client: %w", err)
+			}
+
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+			data := solus.VirtualServerUpdateSettingsRequest{
+				DiskDriver: "sata",
+			}
+			if _, err := client.VirtualServers.UpdateSettings(ctx, vs.VirtualServerID, data); err != nil {
+				cancel()
+				return fmt.Errorf("update virtual server %d disk driver to sata: %w", vs.VirtualServerID, err)
+			}
+			cancel()
 		}
 
-		if len(disks) == 1 {
-			return fmt.Errorf("virtual server %q additional disks not found in %q, expected additional disks count is %d",
-				vs.OriginName,
-				importedXMLPath,
-				len(vs.AdditionalDisks))
-		}
-
-		additionalDisks := disks[1:]
-
-		if len(additionalDisks) != len(vs.AdditionalDisks) {
-			return fmt.Errorf("virtual server %q number of additional disks in %q is %d, but %d expected",
-				vs.OriginName,
-				importedXMLPath,
-				len(additionalDisks),
-				len(vs.AdditionalDisks))
-		}
-
-		for i, disk := range additionalDisks {
-			if err := os.Rename(disk.path, vs.AdditionalDisks[i].DestinationPath); err != nil {
-				return fmt.Errorf("failed to move virtual server %q disk %q to %q: %s",
+		if len(vs.AdditionalDisks) > 0 {
+			if len(disks) == 1 {
+				return fmt.Errorf("virtual server %q additional disks not found in %q, expected additional disks count is %d",
 					vs.OriginName,
-					disk.path,
-					vs.AdditionalDisks[i].DestinationPath,
-					err)
+					importedXMLPath,
+					len(vs.AdditionalDisks))
+			}
+
+			additionalDisks := disks[1:]
+
+			if len(additionalDisks) != len(vs.AdditionalDisks) {
+				return fmt.Errorf("virtual server %q number of additional disks in %q is %d, but %d expected",
+					vs.OriginName,
+					importedXMLPath,
+					len(additionalDisks),
+					len(vs.AdditionalDisks))
+			}
+
+			for i, disk := range additionalDisks {
+				if err := os.Rename(disk.path, vs.AdditionalDisks[i].DestinationPath); err != nil {
+					return fmt.Errorf("failed to move virtual server %q disk %q to %q: %s",
+						vs.OriginName,
+						disk.path,
+						vs.AdditionalDisks[i].DestinationPath,
+						err)
+				}
 			}
 		}
 	}

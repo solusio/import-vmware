@@ -22,7 +22,7 @@ type VMXFile struct {
 	// guestOS = "windows2022srvNext-64"
 	GuestOS string `vmx:"guestOS"`
 	// firmware = "efi"
-	Firmware    string           `vmx:"firmware"`
+	Firmware    solus.Firmware   `vmx:"firmware"`
 	IDEDevices  []vmx.IDEDevice  `vmx:"ide,omitempty"`
 	SCSIDevices []vmx.SCSIDevice `vmx:"scsi,omitempty"`
 	SATADevices []vmx.SATADevice `vmx:"sata,omitempty"`

@@ -10,7 +10,9 @@ Using this tool you can import virtual servers from VMWare ESXi host to a comput
 3. Import of a virtual machine with a directory with the space character (" ") will fail. 
 4. Importing of a virtual machine with a large disk may fail because of unstable network connection.
 5. If OS of a virtual server is older than OS of a SolusVM 2 compute resource then import will fail with `libguestfs error: file_architecture: unknown architecture: /usr/lib/modules/6.8.0-31-generic` or `no installed kernel packages were found`.
-6. If Windows virtual machine not stopped properly the following error will occur: `virt-v2v: error: filesystem was mounted read-only, even though we asked for it to be mounted read-write.  This usually means that the filesystem was not cleanly unmounted.  Possible causes include trying to convert a guest which is running, or using Windows Hibernation or Fast Restart`.
+6. If Windows virtual machine was not stopped gracefully the following error will occur: `virt-v2v: error: filesystem was mounted read-only, even though we asked for it to be mounted read-write.  This usually means that the filesystem was not cleanly unmounted.  Possible causes include trying to convert a guest which is running, or using Windows Hibernation or Fast Restart`.
+7. After the import, Windows virtual server will be using `sata` disk driver which is not optimal, but it is only to allow the first boot. On the first boot, VirtIO drivers will be automatically installed inside the guest OS. Then you have to shutdown the virtual server and change disk driver to `scsi`.
+8. If Windows virtual server can't boot with the "Inaccessible boot device" error, try to change "Disk Driver" setting to `sata` or `virtio`. Install VirtIO drivers inside Windows using VirtIO ISO for Windows, then stop virtual server and change "Disk Driver" setting back to `scsi`. It's highly recommended to run virtual server with `scsi` disk driver.
 
 ## Prerequisites
 
@@ -79,7 +81,10 @@ Example of the file:
       "centos7-64": 2,
       "ubuntu-64": 17,
       "almalinux-64": 18,
-      "debian12-64": 50
+      "debian12-64": 50,
+      "windows9srv-64": 25,
+      "windows2019srv-64": 25,
+      "windows2019srvNext-64": 55
     },
     "user_id": 1,
     "project_id": 1,

@@ -13,7 +13,7 @@ require (
 	github.com/digitalocean/go-libvirt v0.0.0-20240308204700-df736b2945cf // indirect
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/libvirt/libvirt-go-xml v7.4.0+incompatible // indirect
-	github.com/solusio/solus-go-sdk v0.0.0-20240524062700-52e7ee9a6035 // indirect
+	github.com/solusio/solus-go-sdk v0.0.0-20240531111439-a9f6da81f560 // indirect
 	golang.org/x/sys v0.19.0 // indirect
 	gopkg.in/guregu/null.v4 v4.0.0 // indirect
 )
